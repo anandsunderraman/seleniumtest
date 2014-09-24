@@ -3,7 +3,14 @@ var webdriver = require('selenium-webdriver'),
 	_ = require('underscore'),
 	autoUtils = require('./automation-scripts');
 
-var driver = new webdriver.Builder().withCapabilities(webdriver.Capabilities.chrome()).build();
+var chromeCapabilities = webdriver.Capabilities.chrome();
+//setting chrome options
+var chromeOptions = {
+    'args': ['--test-type', '--start-maximized']
+};
+chromeCapabilities.set('chromeOptions', chromeOptions);
+
+var driver = new webdriver.Builder().withCapabilities(chromeCapabilities).build();
 var branchName =  _.isUndefined(process.argv[3]) ? 'master' : process.argv[3], 
     hostName = _.isUndefined(process.argv[2]) ? 'localhost' : process.argv[2],
     installApp = _.isUndefined(process.argv[4]) ? false : (process.argv[4] === '-i'),
